@@ -120,10 +120,10 @@ public class FrameCliente extends JFrame implements ActionListener {
         this.setVisible(true);
 
         try {
-            //sortArrayService = (SortArray) Naming.lookup("//localhost/MergeSortService");
-            sortArrayService = (SortArray) Naming.lookup("//25.64.149.38/MergeSortService");
+            sortArrayService = (SortArray) Naming.lookup("//localhost/MergeSortService");
+            //sortArrayService = (SortArray) Naming.lookup("//25.64.149.38/MergeSortService");
             clientId = sortArrayService.registerClient();
-            System.out.println("Registrado como cliente número: " + clientId);
+            System.out.println("Registrado como cliente: " + clientId);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -160,7 +160,15 @@ public class FrameCliente extends JFrame implements ActionListener {
         enviarArreglo();
         try {
             if (sortArrayService.allClientsSentArrays()) {
+
+                long startTime = System.nanoTime();
+
                 int[] sortedArray = sortArrayService.getSortedArrayBySecuencial();
+
+                long endTime = System.nanoTime();
+                double duration = (endTime - startTime) / 1e6;
+                lbTimeSec.setText("Tiempo de ejecución: " + duration + " ms");
+
                 txtRes.setText(Arrays.toString(sortedArray));
                 System.out.println("Arreglo ordenado recibido del servidor");
             } else {
@@ -175,7 +183,15 @@ public class FrameCliente extends JFrame implements ActionListener {
         enviarArreglo();
         try {
             if (sortArrayService.allClientsSentArrays()) {
+
+                long startTime = System.nanoTime();
+
                 int[] sortedArray = sortArrayService.getSortedArrayByFork();
+
+                long endTime = System.nanoTime();
+                double duration = (endTime - startTime) / 1e6;
+                lbTimeFork.setText("Tiempo de ejecución: " + duration + " ms");
+
                 txtRes.setText(Arrays.toString(sortedArray));
                 System.out.println("Arreglo ordenado recibido del servidor");
             } else {
@@ -190,7 +206,15 @@ public class FrameCliente extends JFrame implements ActionListener {
         enviarArreglo();
         try {
             if (sortArrayService.allClientsSentArrays()) {
+
+                long startTime = System.nanoTime();
+
                 int[] sortedArray = sortArrayService.getSortedArrayByExecutor();
+
+                long endTime = System.nanoTime();
+                double duration = (endTime - startTime) / 1e6;
+                lbTimeExec.setText("Tiempo de ejecución: " + duration + " ms");
+
                 txtRes.setText(Arrays.toString(sortedArray));
                 System.out.println("Arreglo ordenado recibido del servidor");
             } else {
